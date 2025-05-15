@@ -11,7 +11,7 @@ fake = faker.Faker()
 
 produtos = ['Smartphone', 'Notebook', 'Tablet', 'Smartwatch', 'Fone de Ouvido']
 
-def gerar_dados(n=20):
+def gerar_dados(n=50):
     try:
         dados = []
         for i in range(n):
