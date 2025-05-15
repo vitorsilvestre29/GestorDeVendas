@@ -1,14 +1,16 @@
+import time
 import subprocess
-import os
+import logging
 
-# Caminho absoluto ou relativo da pasta onde estão os scripts
-etl_dir = os.path.join(os.getcwd(), 'etl')
+logging.basicConfig(filename='logs/etl.log', level=logging.INFO, 
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Lista dos scripts para executar
-scripts = ['extract.py', 'transform.py', 'load.py']
+def agendar_etl(intervalo_minutos=30):
+    while True:
+        logging.info("Executando pipeline ETL agendado")
+        subprocess.run(['python', 'auto_etl.py'], check=True)
+        logging.info(f"Pipeline ETL finalizado, aguardando {intervalo_minutos} minutos para próxima execução")
+        time.sleep(intervalo_minutos * 60)
 
-# Executar os scripts
-for script in scripts:
-    script_path = os.path.join(etl_dir, script)
-    print(f"Executando {script_path}")
-    subprocess.run(['python', script_path], check=True)
+if __name__ == "__main__":
+    agendar_etl()
